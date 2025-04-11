@@ -104,13 +104,6 @@ The application is fully responsive:
 - Two-column layout on tablets and desktops
 - All features available on mobile
 
-## 🏁 Next Steps
-
-- Consider adding custom onboarding tasks
-- Explore exporting onboarding reports
-- Set up reminder notifications for pending tasks
-
-For any additional questions, please contact your system administrator.
 
 ---
 

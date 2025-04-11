@@ -1,151 +1,117 @@
-# Candidate Portfolio Dashboard
+# 📋 Employee Onboarding Tracker - User Guide
 
-## Overview
+![App Screenshot](https://via.placeholder.com/800x500?text=Employee+Onboarding+Tracker+Screenshot)
 
-The Candidate Portfolio Dashboard is an internal HR tool designed to help recruiters organize, view, and filter developer candidate profiles all in one place. This lightweight application allows you to:
+## 🌟 Introduction
 
-- Store candidate information including GitHub/LinkedIn profiles
-- Track tech stacks and experience levels
-- Quickly filter and sort candidates
-- Export candidate data to CSV
+The Employee Onboarding Tracker is an internal HR tool designed to streamline and monitor the onboarding process for new hires. This guide will help you navigate and use all features effectively.
 
-## Features
+## 🚀 Getting Started
 
-### Candidate Management
+### Accessing the Application
 
-- **Add new candidates** with:
-  - Full name
-  - Job role/position
-  - LinkedIn and GitHub URLs
-  - Experience level (Junior/Mid/Senior)
-  - Tech stack (multiple tags)
+1. Open the application in your web browser
+2. No login required - all data is saved automatically in your browser
 
-### Dashboard View
+### First-Time Setup
 
-- **Card-based layout** for easy scanning
-- **Quick links** to LinkedIn and GitHub profiles
-- **Visual badges** for experience levels
-- **Tech stack chips** for at-a-glance skills assessment
+- The application comes with default onboarding tasks
+- No initial configuration needed
 
-### Powerful Filtering
+## 🖥 Main Interface Overview
 
-- Filter by:
-  - Job role
-  - Experience level
-  - Tech stack tags
-- Sort by:
-  - Name (A-Z)
-  - Experience level (Junior → Senior)
+![Interface Overview](https://via.placeholder.com/600x300?text=Interface+Overview)
 
-### Other Features
+1. **Dashboard Header**
 
-- **Click any candidate** to view full details in a modal
-- **Pagination** for large candidate lists
-- **Export to CSV** functionality for easy data sharing
+   - Application title
+   - "Add New Employee" button
 
-## Getting Started
+2. **Metrics Cards**
 
-### Prerequisites
+   - Total employees
+   - Fully onboarded count
+   - Pending onboarding count
 
-- Node.js (v14 or higher)
-- npm or yarn
+3. **Search & Filter Section**
+4. **Employee Cards Grid**
 
-### Installation
+## ✨ Key Features
 
-1. Clone the repository:
+### Adding a New Employee
 
-   ```bash
-   git clone https://github.com/BongominErickJuma/Candidate-Portfolio-Dashboard
-   cd candidate-portfolio-dashboard
-   ```
+1. Click the "Add New Employee" button
+2. Fill in the form:
+   - Full Name (required)
+   - Email (required)
+   - Job Role/Department (required)
+   - Start Date (optional)
+3. Click "Add Employee"
+4. The system automatically creates an onboarding checklist
 
-2. Install dependencies:
+![Add Employee Modal](https://via.placeholder.com/500x400?text=Add+Employee+Form)
 
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
+### Managing Onboarding Tasks
 
-3. Start the development server:
+- Each employee card shows their onboarding progress
+- Checkboxes indicate task completion status:
+  - 🔴 Not started (default)
+  - 🟡 In progress (partially complete)
+  - 🟢 Completed (all tasks done)
+- Click checkboxes to mark tasks as complete/incomplete
 
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
+### Deleting an Employee
 
-4. Open your browser and navigate to `http://localhost:5173`
+1. Click the trash can icon (🗑) in the top-right corner of an employee card
+2. Confirm the deletion when prompted
+3. A notification will appear with an "Undo" option for 5 seconds
 
-## Usage Guide
+### Searching and Filtering
 
-### Adding Candidates
+- **Search by name**: Type in the search box to filter employees
+- **Filter by status**: Use the dropdown to view:
+  - All employees
+  - Only fully onboarded
+  - Only pending onboarding
 
-1. Fill out the form on the left side of the dashboard
-2. Provide all required information
-3. For tech stack:
-   - Select from predefined options or
-   - Type custom technologies and click "Add"
-4. Click "Add Candidate" to submit
+## 🔄 Data Management
 
-### Viewing Candidates
-
-- All candidates appear in the main dashboard area
-- Click any candidate card to view full details in a modal
-- Use the LinkedIn and GitHub icons to visit profiles
-
-### Filtering and Sorting
-
-1. Use the "Filters & Sorting" panel at the top of the dashboard
-2. Select sorting preference (Name or Experience)
-3. Enter filters as needed:
-   - Type in the role field to filter by job title
-   - Select experience level from dropdown
-   - Choose specific tech stack to filter by
-
-### Exporting Data
-
-1. Apply any desired filters
-2. Click the "Export to CSV" button
-3. A CSV file will download with all currently filtered candidates
-
-## Data Persistence
-
-All candidate data is stored in your browser's local storage. This means:
-
+- All data is automatically saved in your browser
+- No manual save required
 - Data persists between sessions
-- Data is specific to your browser/device
-- To share data, use the CSV export feature
 
-## Troubleshooting
+## 💡 Tips & Tricks
 
-### Data Not Saving
+- Click on the progress bar to see percentage completion
+- Hover over employee cards for shadow effects
+- The system automatically marks employees as "Fully Onboarded" when all tasks are complete
+- Use the undo feature if you accidentally delete an employee
 
-- Ensure you're using the same browser where you added candidates
-- Check if browser settings block local storage
-- Try clearing cache and reloading the application
+## 🆘 Troubleshooting
 
-### Export Issues
+| Issue                  | Solution                                |
+| ---------------------- | --------------------------------------- |
+| Employee not appearing | Refresh the page and check localStorage |
+| Tasks not saving       | Ensure you're clicking the checkboxes   |
+| Undo not working       | Act within 5 seconds of deletion        |
+| Mobile display issues  | Rotate device or use desktop view       |
 
-- Make sure you have candidates in the current filtered view
-- Check browser settings for download permissions
-- Try a different browser if issues persist
+## 📱 Mobile Usage
 
-## Built With
+The application is fully responsive:
 
-- [React](https://reactjs.org/) - JavaScript library
-- [Vite](https://vitejs.dev/) - Build tool
-- [Tailwind CSS](https://tailwindcss.com/) - Styling framework
-- [LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) - Data persistence
+- Single column layout on small screens
+- Two-column layout on tablets and desktops
+- All features available on mobile
 
-## Future Enhancements
+## 🏁 Next Steps
 
-- User authentication
-- Cloud storage integration
-- Bulk import functionality
-- Advanced analytics
-- Team collaboration features
+- Consider adding custom onboarding tasks
+- Explore exporting onboarding reports
+- Set up reminder notifications for pending tasks
 
-## Contributing
+For any additional questions, please contact your system administrator.
 
-Contributions are welcome! Please fork the repository and submit a pull request with your improvements.
+---
+
+**Happy Onboarding!** 🎉

@@ -3,12 +3,30 @@ import EmployeeList from "./components/EmployeeList";
 import SearchFilter from "./components/SearchFilter";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { defaultTasks } from "./data/defaultTasks";
+import { defaultEmployees } from "./data/defaultEmployees";
 import EmployeeFormModal from "./components/EmployeeFormModal";
 import MetricsCard from "./components/MetricsCard";
 import ToastNotification from "./components/ToastNotification";
 
 function App() {
-  const [employees, setEmployees] = useLocalStorage("employees", []);
+  // Initialize with default employees, but merge with any existing localStorage data
+  const getInitialEmployees = () => {
+    try {
+      const stored = localStorage.getItem("employees");
+      if (stored) {
+        const parsedEmployees = JSON.parse(stored);
+        // Always ensure default employees are present
+        const existingIds = parsedEmployees.map(emp => emp.id);
+        const missingDefaults = defaultEmployees.filter(emp => !existingIds.includes(emp.id));
+        return [...missingDefaults, ...parsedEmployees];
+      }
+      return defaultEmployees;
+    } catch {
+      return defaultEmployees;
+    }
+  };
+
+  const [employees, setEmployees] = useLocalStorage("employees", getInitialEmployees());
   const [filter, setFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [showModal, setShowModal] = useState(false);
@@ -81,71 +99,83 @@ function App() {
   });
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-            Employee Onboarding Tracker
-          </h1>
+    <div style={{ padding: '32px 16px', maxWidth: '1200px', margin: '0 auto' }}>
+      <div className="card animate-fade-in" style={{ padding: '24px', marginBottom: '32px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div>
+            <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: 'var(--text-primary)', marginBottom: '8px' }}>
+              Employee Onboarding Tracker
+            </h1>
+            <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
+              Track and manage employee onboarding progress
+            </p>
+          </div>
           <button
             onClick={() => setShowModal(true)}
-            className="w-full sm:w-auto bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 px-6 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all shadow-md hover:shadow-lg active:scale-95"
+            className="btn btn-primary animate-scale-in"
+            style={{ alignSelf: 'flex-start' }}
           >
-            <span className="flex items-center justify-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              Add New Employee
-            </span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                clipRule="evenodd"
+              />
+            </svg>
+            Add New Employee
           </button>
         </div>
-        <div className="mt-2">
-          <p className="text-sm text-gray-500">
-            Track and manage employee onboarding progress
-          </p>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '16px', marginBottom: '32px' }}>
+        <div className="animate-fade-in" style={{animationDelay: "0.1s"}}>
+          <MetricsCard
+            title="Total Candidates"
+            value={metrics.total}
+            icon="users"
+            type="primary"
+          />
+        </div>
+        <div className="animate-fade-in" style={{animationDelay: "0.2s"}}>
+          <MetricsCard
+            title="Fully Onboarded"
+            value={metrics.onboarded}
+            icon="check"
+            type="success"
+          />
+        </div>
+        <div className="animate-fade-in" style={{animationDelay: "0.3s"}}>
+          <MetricsCard
+            title="Pending Onboarding"
+            value={metrics.pending}
+            icon="clock"
+            type="warning"
+          />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        <MetricsCard
-          title="Total Candidates"
-          value={metrics.total}
-          color="border-l-blue-500"
-        />
-        <MetricsCard
-          title="Fully Onboarded"
-          value={metrics.onboarded}
-          color="border-l-green-500"
-        />
-        <MetricsCard
-          title="Pending Onboarding"
-          value={metrics.pending}
-          color="border-l-yellow-500"
-        />
-      </div>
-
-      <div className="grid grid-cols-1 gap-8">
-        <SearchFilter
-          filter={filter}
-          setFilter={setFilter}
-          statusFilter={statusFilter}
-          setStatusFilter={setStatusFilter}
-        />
-        <EmployeeList
-          employees={filteredEmployees}
-          updateEmployeeTasks={updateEmployeeTasks}
-          onDeleteEmployee={deleteEmployee}
-          restoredEmployeeId={restoredEmployeeId}
-        />
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <div className="animate-fade-in" style={{animationDelay: "0.4s"}}>
+          <SearchFilter
+            filter={filter}
+            setFilter={setFilter}
+            statusFilter={statusFilter}
+            setStatusFilter={setStatusFilter}
+          />
+        </div>
+        <div className="animate-slide-in" style={{animationDelay: "0.5s"}}>
+          <EmployeeList
+            employees={filteredEmployees}
+            updateEmployeeTasks={updateEmployeeTasks}
+            onDeleteEmployee={deleteEmployee}
+            restoredEmployeeId={restoredEmployeeId}
+          />
+        </div>
       </div>
 
       {showModal && (

@@ -22,44 +22,45 @@ function EmployeeList({
 
   if (employees.length === 0) {
     return (
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <p className="text-gray-500">No employees added yet.</p>
+      <div className="card animate-fade-in" style={{ padding: "32px", textAlign: "center" }}>
+        <svg style={{ width: "64px", height: "64px", margin: "0 auto 16px", color: "var(--text-secondary)" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <p style={{ color: "var(--text-primary)", fontSize: "18px", marginBottom: "8px" }}>No employees added yet</p>
+        <p style={{ color: "var(--text-secondary)", fontSize: "14px" }}>Click "Add New Employee" to get started</p>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {employees.map((employee) => (
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))", gap: "24px" }}>
+      {employees.map((employee, index) => (
         <div
           key={employee.id}
           ref={(el) => (employeeRefs.current[employee.id] = el)}
-          className={`
-            bg-white p-6 rounded-lg shadow-md relative
-            transition-all duration-300
-            ${
+          className={`employee-card animate-fade-in transition-all ${
               deletingId === employee.id
                 ? "opacity-0 scale-95"
                 : "opacity-100 scale-100"
-            }
-            ${
+            } ${
               restoredEmployeeId === employee.id
-                ? "ring-2 ring-blue-500 bg-blue-50"
-                : "hover:shadow-lg"
-            }
-          `}
+                ? "restored"
+                : ""
+            }`}
+          style={{ animationDelay: `${index * 0.1}s` }}
         >
           <button
             onClick={() => {
               setDeletingId(employee.id);
               setTimeout(() => onDeleteEmployee(employee.id), 300);
             }}
-            className="absolute top-4 right-4 p-1 bg-red-50 rounded-full text-red-400 hover:bg-red-100 hover:text-red-600 transition-colors cursor-pointer"
+            className="btn-danger"
+            style={{ position: "absolute", top: "16px", right: "16px", padding: "8px" }}
             aria-label="Delete employee"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              style={{ width: "16px", height: "16px" }}
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -71,19 +72,27 @@ function EmployeeList({
             </svg>
           </button>
 
-          <div className="flex justify-start gap-5 items-start mb-4">
-            <div>
-              <h3 className="text-lg font-semibold">{employee.fullName}</h3>
-              <p className="text-sm text-gray-600">{employee.jobRole}</p>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: "20px" }}>
+            <div style={{ flex: 1 }}>
+              <h3 style={{ fontSize: "20px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "4px" }}>{employee.fullName}</h3>
+              <p style={{ fontSize: "14px", color: "var(--text-secondary)", display: "flex", alignItems: "center", gap: "4px" }}>
+                <svg style={{ width: "16px", height: "16px" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                {employee.jobRole}
+              </p>
               {employee.startDate && (
-                <p className="text-sm text-gray-500">
-                  Starts: {new Date(employee.startDate).toLocaleDateString()}
+                <p style={{ fontSize: "14px", color: "var(--text-secondary)", marginTop: "4px", display: "flex", alignItems: "center", gap: "4px" }}>
+                  <svg style={{ width: "16px", height: "16px" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  {new Date(employee.startDate).toLocaleDateString()}
                 </p>
               )}
             </div>
             {employee.onboarded && (
-              <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">
-                Onboarded
+              <span className="badge badge-success">
+                ✓ Onboarded
               </span>
             )}
           </div>

@@ -20,37 +20,52 @@ function OnboardingChecklist({ tasks, onTaskChange }) {
   return (
     <div>
       <ProgressBar progress={progress} />
-      <ul className="mt-4 space-y-2">
-        {currentTasks.map((task) => (
-          <li key={task.id} className="flex items-start">
-            <input
-              type="checkbox"
-              id={`task-${task.id}`}
-              checked={task.completed}
-              onChange={() => handleTaskToggle(task.id)}
-              className="mt-1 mr-2 cursor-pointer"
-            />
-            <label
-              htmlFor={`task-${task.id}`}
-              className={`flex-1 ${
-                task.completed ? "line-through text-gray-400" : ""
-              }`}
-            >
-              <span className="font-medium">{task.name}</span>
+      <ul style={{ marginTop: "16px", display: "flex", flexDirection: "column", gap: "12px" }}>
+        {currentTasks.map((task, index) => (
+          <li 
+            key={task.id} 
+            className="animate-slide-in"
+            style={{ 
+              animationDelay: `${index * 0.05}s`,
+              display: "flex",
+              alignItems: "flex-start",
+              padding: "12px",
+              background: "rgba(255, 255, 255, 0.6)",
+              borderRadius: "8px",
+              border: "1px solid var(--border)",
+              transition: "all 0.2s ease"
+            }}
+          >
+            <label className="checkbox-container" style={{ marginRight: "12px", marginTop: "2px" }}>
+              <input
+                type="checkbox"
+                checked={task.completed}
+                onChange={() => handleTaskToggle(task.id)}
+              />
+              <span className="checkbox-checkmark"></span>
+            </label>
+            <div style={{ flex: 1, opacity: task.completed ? 0.6 : 1 }}>
+              <span style={{ 
+                fontWeight: "500", 
+                color: "var(--text-primary)", 
+                display: "block",
+                textDecoration: task.completed ? "line-through" : "none"
+              }}>
+                {task.name}
+              </span>
               {task.description && (
-                <span className="block text-sm text-gray-500">
+                <span style={{ 
+                  display: "block", 
+                  fontSize: "14px", 
+                  color: "var(--text-secondary)", 
+                  marginTop: "2px" 
+                }}>
                   {task.description}
                 </span>
               )}
-            </label>
-            <span
-              className={`ml-2 text-xs px-2 py-1 rounded ${
-                task.completed
-                  ? "bg-green-100 text-green-800"
-                  : "bg-yellow-100 text-yellow-800"
-              }`}
-            >
-              {task.completed ? "Completed" : "Pending"}
+            </div>
+            <span className={`badge ${task.completed ? "badge-success" : "badge-warning"}`}>
+              {task.completed ? "✓ Done" : "Pending"}
             </span>
           </li>
         ))}
